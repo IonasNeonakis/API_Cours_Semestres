@@ -87,14 +87,11 @@ class CoursController extends AbstractController
      * @Route("/API/cours/{id}/delete", name="delete_cours",methods={"DELETE"})
      */
     public function deleteCours($id,CoursRepository $repo,  EntityManagerInterface $manager){
-        $exists = 'no';
         if($cours = $repo->find($id)) {
-            $existe = 'yes';
             $manager->remove($cours);
             $manager->flush();
         }
-        $response = new Response('{ "id" : '. $id .' '. $existe.'  }');
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
+
+        return new JsonResponse();
     }
 }
