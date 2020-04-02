@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SemestreController extends AbstractController
 {
     /**
-     * @Route("/API/semestre",name="accueilSemestres", methods={"GET"})
+     * @Route("/api/semestre",name="accueilSemestres", methods={"GET"})
      */
     public function accueilSemestres(SemestreRepository $repo,SerializerInterface $serializer)
     {
@@ -30,7 +30,6 @@ class SemestreController extends AbstractController
         $res =$serializer->serialize($semestres,'json');
         $response = new Response($res);
         $response->headers->set('Content-Type', 'application/json');
-        $response->headers->set('Access-Control-Allow-Origin', '*');
         return $response;
     }
 
@@ -45,6 +44,8 @@ class SemestreController extends AbstractController
             $creer=true;
             $semestre = new Semestre();
         }
+
+        $body = $request->getContent();
 
         $form = $this->createFormBuilder($semestre)
             ->add('numeroSemestre', NumberType::class,['required'=>true])
